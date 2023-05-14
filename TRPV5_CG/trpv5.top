@@ -1,0 +1,16 @@
+#include "martini_v2.2.itp"
+
+
+
+#include "Protein_A.itp"
+
+[ system ]
+; name
+Martini system from trpv5.pdb
+
+[ molecules ]
+; name        number
+Protein_A 	 1
+Protein_A 	 1
+Protein_A 	 1
+Protein_A 	 1
