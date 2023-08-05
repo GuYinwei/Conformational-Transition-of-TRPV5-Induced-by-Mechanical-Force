@@ -1,0 +1,63 @@
+title                    = Martini
+; TIMESTEP IN MARTINI 
+integrator               = md
+dt                       = 0.03 ；0.03ps
+nsteps			             = 40000000 ;  1200ns
+nstcomm                  = 100
+comm-grps		 =
+ 
+; OUTPUT CONTROL OPTIONS =
+nstxout                  = 0
+nstvout                  = 0
+nstfout                  = 0
+nstlog                   = 50000  ; Output frequency for energies to log file
+nstenergy                = 5000   ; Output frequency for energies to energy file
+nstxtcout                = 50000  ; Output frequency for .xtc file
+xtc_precision            = 100
+xtc-grps                 = 
+energygrps               = Protein_1 Protein_2 Protein_3 Protein_4 POPC W ION
+
+; NEIGHBOURLIST and MARTINI 
+nstlist                  = 20
+ns_type                  = grid
+pbc                      = xyz
+rlist                    = 1.4
+rlistlong                = 1.4
+
+; MARTINI and NONBONDED 
+coulombtype              = Reaction_field  ;Reaction_field (for use with Verlet-pairlist) ;PME (especially with polarizable water)
+rcoulomb_switch          = 0.0
+rcoulomb                 = 1.1
+epsilon_r                = 15	; 2.5 (with polarizable water)
+vdw_type                 = cutoff  ;cutoff (for use with Verlet-pairlist)
+rvdw_switch              = 0.9
+rvdw                     = 1.1	;1.1 (for use with Verlet-pairlist)
+cutoff-scheme            = Verlet
+;coulomb-modifier         = Potential-shift
+vdw-modifier             = Force-switch
+epsilon_rf               = 0   ; epsilon_rf = 0 really means epsilon_rf = infinity
+;verlet-buffer-drift      = 0.005
+
+; MARTINI and TEMPERATURE/PRESSURE
+tcoupl                   = v-rescale
+tc-grps                  = Protein_1 Protein_2 Protein_3 Protein_4 POPC W ION
+tau_t                    = 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+ref_t                    = 310 310 310 310 310 310 310
+Pcoupl                   = berendsen  ; parrinello-rahman ; parrinello-rahman
+Pcoupltype               = semiisotropic
+tau_p                    = 6.5        ; 12.0 12.0  ;parrinello-rahman is more stable with larger tau-p, DdJ, 20130422
+compressibility          = 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4 3e-4   ; 3e-4
+ref_p                    = 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+gen_vel                  = yes
+gen_temp                 = 320
+gen_seed                 = 473529
+
+; MARTINI and CONSTRAINTS 
+constraints              = none
+constraint_algorithm     = Lincs
+continuation             = no
+lincs_order              = 4
+lincs_warnangle          = 30
+;freezegrps               = 
+;freezedim                = 
+cos-acceleration         = 0
